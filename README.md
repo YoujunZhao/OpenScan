@@ -6,7 +6,7 @@
     <a href="https://youjunzhao.github.io/">Youjun Zhao</a><sup>1</sup>,
     <a href="https://jiaying.link/">Jiaying Lin</a><sup>1</sup>,
     <a href="https://shuquanye.com/">Shuquan Ye</a><sup>1</sup>, 
-    <a href="https://https://qspang.github.io/">Qianshi Pang</a><sup>2</sup>, 
+    <a href="https://qspang.github.io/">Qianshi Pang</a><sup>2</sup>, 
     <a href="https://www.cs.cityu.edu.hk/~rynson/">Rynson W.H. Lau</a><sup>1</sup>,
     <br>
     <sup>1</sup>City University of Hong Kong, 
