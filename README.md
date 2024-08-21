@@ -12,6 +12,6 @@
     <sup>1</sup>City University of Hong Kong, 
     <sup>2</sup>South China University of Technology
   </p>
+  <h3 align="center"><a href="https://arxiv.org/abs/2408.11030">📄[arXiv]</a> | <a href="">🔥[Benchmark Data (Coming Soon)</a> </h3>
   <div align="center"></div>
 </p>
-**[📄[arXiv]](https://arxiv.org/abs/2408.11030)** &emsp; **[🔥[New Dataset Download(Coming Soon)]]()**
