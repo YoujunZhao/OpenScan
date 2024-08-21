@@ -6,8 +6,8 @@
     <a href="https://youjunzhao.github.io/">Youjun Zhao</a><sup>1</sup>,
     <a href="https://jiaying.link/">Jiaying Lin</a><sup>1</sup>,
     <a href="https://shuquanye.com/">Shuquan Ye</a><sup>1</sup>, 
-    <a href="https://people.inf.ethz.ch/pomarc/">Qianshi Pang</a><sup>2</sup>, 
-    <a href="https://federicotombari.github.io/">Rynson W.H. Lau</a><sup>1</sup>,
+    <a href="https://https://qspang.github.io/">Qianshi Pang</a><sup>2</sup>, 
+    <a href="https://www.cs.cityu.edu.hk/~rynson/">Rynson W.H. Lau</a><sup>1</sup>,
     <br>
     <sup>1</sup>City University of Hong Kong, 
     <sup>2</sup>South China University of Technology
