@@ -12,7 +12,7 @@
     <sup>1</sup>City University of Hong Kong, 
     <sup>2</sup>South China University of Technology
   </p>
-  <h3 align="center"><a href="https://arxiv.org/abs/2408.11030">📄[arXiv]</a> | <a href="">🔥[Benchmark Data (Coming Soon)]</a> </h3>
+  <h3 align="center"><a href="https://arxiv.org/abs/2408.11030">📄[arXiv]</a> | <a href="https://portland-my.sharepoint.com/:u:/g/personal/youjzhao2-c_my_cityu_edu_hk/ETXoQ8QIZNpKnxCLvtT8Xl8BWAcvo_SoiAHd_ao3is1cKQ?e=mWHwbS">🔥[Benchmark Data]</a> </h3>
   <div align="center"></div>
 </p>
 
@@ -20,6 +20,29 @@
   <img src="https://github.com/YoujunZhao/OpenScan/blob/main/imgs/dataset_vis.jpg?raw=true" width="100%" height="100%"/>
 </div><br/>
 
-### News
+## News
 
+* **27 Aug 2024**: Release the validation set of OpenScan benchmark. 🔥
 * **20 Aug 2024**: [OpenScan](https://arxiv.org/abs/2408.11030) released on arXiv. 📝
+
+## Benchmark Installation
+If you want to download the OpenScan benchmark data, we provide the raw validation set from [OneDrive](https://portland-my.sharepoint.com/:u:/g/personal/youjzhao2-c_my_cityu_edu_hk/ETXoQ8QIZNpKnxCLvtT8Xl8BWAcvo_SoiAHd_ao3is1cKQ?e=mWHwbS).
+
+## Benchmark Format
+
+```python
+    {
+        "scene_id":   [ScanNet scene id,           e.g. "scene0011_00"],
+        "object_id":  [ScanNet object id,          e.g. "0"],
+        "object_name":[ScanNet object name,        e.g. "chair"],
+        "material":   [ScanNet object material,    e.g. "wood"],
+        "affordance": [ScanNet object affordance,  e.g. "sleep"],
+        "property":   [ScanNet object property,    e.g. "soft"],
+        "type":       [ScanNet object type,        e.g. "source of illumination"],
+        "manner":     [ScanNet object manner,      e.g. "steered by handlebars"],
+        "synonyms":   [ScanNet object synonyms,    e.g. "bedside table"],
+        "requirement":[ScanNet object requirement, e.g. "water and sun"],
+        "element":    [ScanNet object element,     e.g. "88 keys"]
+    },
+
+```
