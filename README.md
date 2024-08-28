@@ -46,3 +46,12 @@ If you want to download the OpenScan benchmark data, we provide the raw validati
     },
 
 ```
+## Citation :pray:
+```
+@article{zhao2024openscan,
+  title={OpenScan: A Benchmark for Generalized Open-Vocabulary 3D Scene Understanding},
+  author={Zhao, Youjun and Lin, Jiaying and Ye, Shuquan and Pang, Qianshi and Lau, Rynson WH},
+  journal={arXiv preprint arXiv:2408.11030},
+  year={2024}
+}
+```
