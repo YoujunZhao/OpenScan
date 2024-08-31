@@ -27,7 +27,7 @@
 
 ## Benchmark Installation
 If you want to download the OpenScan benchmark data, we provide the raw validation set from [OneDrive](https://portland-my.sharepoint.com/:u:/g/personal/youjzhao2-c_my_cityu_edu_hk/ETXoQ8QIZNpKnxCLvtT8Xl8BWAcvo_SoiAHd_ao3is1cKQ?e=mWHwbS).
-
+You can also download the processed validation set from [OneDrive](https://portland-my.sharepoint.com/:f:/g/personal/youjzhao2-c_my_cityu_edu_hk/EiIUDBGAK7FNrtT_zpYNAaQBEv8HTjZPNwJDQYBGl6g6YQ?e=5P1n9M).
 ## Benchmark Format
 
 ```python
