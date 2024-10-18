@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-<strong>OpenScan</strong> is a novel benchmark that facilitates comprehensive evaluation of the generalization ability of 3D scene understanding models on abstract object attributes. It expands the object classes in ScanNet200 into eight linguistic aspects of object-related attributes.
+<strong>OpenScan</strong> is a novel benchmark that facilitates comprehensive evaluation of the generalization ability of 3D scene understanding models on abstract object attributes. It expands the single category of object classes in ScanNet200 into eight linguistic aspects of object-related attributes.
 </p>
 <br>
 
