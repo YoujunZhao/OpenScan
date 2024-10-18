@@ -12,9 +12,12 @@
     <sup>1</sup>City University of Hong Kong, 
     <sup>2</sup>South China University of Technology
   </p>
-  <h3 align="center"><a href="https://arxiv.org/abs/2408.11030">📄[arXiv]</a> | <a href="https://portland-my.sharepoint.com/:u:/g/personal/youjzhao2-c_my_cityu_edu_hk/ETXoQ8QIZNpKnxCLvtT8Xl8BWAcvo_SoiAHd_ao3is1cKQ?e=mWHwbS">🔥[Benchmark Data]</a> </h3>
+  <h3 align="center"><a href="https://arxiv.org/abs/2408.11030">📄[arXiv]</a> | <a href="https://portland-my.sharepoint.com/:u:/g/personal/youjzhao2-c_my_cityu_edu_hk/ETXoQ8QIZNpKnxCLvtT8Xl8BWAcvo_SoiAHd_ao3is1cKQ?e=mWHwbS">🔥[Data]</a> </h3>
   <div align="center"></div>
 </p>
+
+<br/>
+We provide a novel benchmark named **OpenScan** to facilitate comprehensive evaluation of the generalization ability of 3D scene understanding models on abstract object attributes. OpenScan expands the single category of object classes in ScanNet200 into eight linguistic aspects of object-related attributes.
 
 <div align="center">
   <img src="https://github.com/YoujunZhao/OpenScan/blob/main/imgs/dataset_vis.jpg?raw=true" width="100%" height="100%"/>
