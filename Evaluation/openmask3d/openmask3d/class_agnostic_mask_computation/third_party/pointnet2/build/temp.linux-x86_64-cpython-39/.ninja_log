@@ -1,0 +1,10 @@
+# ninja log v5
+0	7173	1716530244080991156	/mnt/zyj/openmask3d/openmask3d/class_agnostic_mask_computation/third_party/pointnet2/build/temp.linux-x86_64-cpython-39/_ext_src/src/ball_query_gpu.o	8deb6dc00b9d58fa
+1	7207	1716530244100991287	/mnt/zyj/openmask3d/openmask3d/class_agnostic_mask_computation/third_party/pointnet2/build/temp.linux-x86_64-cpython-39/_ext_src/src/group_points_gpu.o	652565ad7045522d
+1	7207	1716530244104991314	/mnt/zyj/openmask3d/openmask3d/class_agnostic_mask_computation/third_party/pointnet2/build/temp.linux-x86_64-cpython-39/_ext_src/src/interpolate_gpu.o	30863ff8687ec301
+1	7369	1716530244276992448	/mnt/zyj/openmask3d/openmask3d/class_agnostic_mask_computation/third_party/pointnet2/build/temp.linux-x86_64-cpython-39/_ext_src/src/sampling_gpu.o	a406b1fbc63f839
+1	8273	1716530245176998379	/mnt/zyj/openmask3d/openmask3d/class_agnostic_mask_computation/third_party/pointnet2/build/temp.linux-x86_64-cpython-39/_ext_src/src/sampling.o	7ea744c5ee4cd1b1
+1	8289	1716530245196998511	/mnt/zyj/openmask3d/openmask3d/class_agnostic_mask_computation/third_party/pointnet2/build/temp.linux-x86_64-cpython-39/_ext_src/src/group_points.o	eac763f9b4a78e92
+1	8312	1716530245220998669	/mnt/zyj/openmask3d/openmask3d/class_agnostic_mask_computation/third_party/pointnet2/build/temp.linux-x86_64-cpython-39/_ext_src/src/interpolate.o	362404b9c0996c05
+0	8371	1716530245280999064	/mnt/zyj/openmask3d/openmask3d/class_agnostic_mask_computation/third_party/pointnet2/build/temp.linux-x86_64-cpython-39/_ext_src/src/bindings.o	6591fcf01cf8ae20
+0	10539	1716530247449013354	/mnt/zyj/openmask3d/openmask3d/class_agnostic_mask_computation/third_party/pointnet2/build/temp.linux-x86_64-cpython-39/_ext_src/src/ball_query.o	2b603315dd6f5da4
