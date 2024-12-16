@@ -1,4 +1,0 @@
-supervision
-onnx
-onnxruntime
-onnxsim

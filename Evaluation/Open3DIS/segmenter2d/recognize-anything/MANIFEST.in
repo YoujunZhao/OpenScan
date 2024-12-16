@@ -1,3 +1,0 @@
-include ram/configs/*.json
-include ram/configs/swin/*.json
-include ram/data/*.txt

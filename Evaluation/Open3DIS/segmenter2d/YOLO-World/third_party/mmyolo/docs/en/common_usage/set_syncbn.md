@@ -1,1 +1,0 @@
-# Enabling and disabling SyncBatchNorm

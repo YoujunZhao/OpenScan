@@ -1,3 +1,0 @@
-[submodule "third_party/mmyolo"]
-	path = third_party/mmyolo
-	url = https://github.com/onuralpszr/mmyolo.git

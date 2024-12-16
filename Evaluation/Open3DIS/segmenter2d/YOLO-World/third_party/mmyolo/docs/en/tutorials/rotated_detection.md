@@ -1,3 +1,0 @@
-# Rotated Object Detection
-
-TODO
