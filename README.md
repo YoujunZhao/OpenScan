@@ -54,6 +54,31 @@ You can also download the processed validation set from [OneDrive](https://portl
     },
 
 ```
+
+## Evaluation
+
+### 1. Quick Evaluation on Your Codebase
+If your codebase already supports evaluation for the ScanNet or ScanNet200 benchmarks, you can easily adapt it for the OpenScan benchmark by changing the ground truth (GT) labels and label mapping files.
+
+* Download the processed validation set and the label mapping file for the OpenScan benchmark from [Benchmark Installation](https://github.com/YoujunZhao/OpenScan?tab=readme-ov-file#benchmark-installation).
+
+* Place the processed OpenScan validation set into your GT file directory.
+
+* Replace your existing label mapping scripts with the OpenScan label mapping file (e.g, replace the [SCANNET_LABELS and SCANNET_IDS](https://github.com/YoujunZhao/OpenScan/blob/main/Evaluation/MaskClustering/evaluation/constants_material_1.py)).
+
+iv) Run your evaluation process.
+
+### 2. Evaluation on Existing 3D Scene Understanding Baselines
+
+* For OpenMask3D, please refer to [OpenMask3D](https://github.com/YoujunZhao/OpenScan/tree/main/Evaluation/openmask3d_sai3d).
+
+* For SAI3D, please refer to [SAI3D](https://github.com/YoujunZhao/OpenScan/tree/main/Evaluation/openmask3d_sai3d).
+
+* For MaskClustering, please refer to [MaskClustering](https://github.com/YoujunZhao/OpenScan/tree/main/Evaluation/MaskClustering).
+
+* For Open3DIS, please refer to [Open3DIS](https://github.com/YoujunZhao/OpenScan/tree/main/Evaluation/Open3DIS).
+
+
 ## Citation :pray:
 ```
 @article{zhao2024openscan,
