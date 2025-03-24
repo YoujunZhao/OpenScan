@@ -66,7 +66,7 @@ If your codebase already supports evaluation for the ScanNet or ScanNet200 bench
 
 * Replace your existing label mapping scripts with the OpenScan label mapping file (e.g, replace the [SCANNET_LABELS and SCANNET_IDS](https://github.com/YoujunZhao/OpenScan/blob/main/Evaluation/MaskClustering/evaluation/constants_material_1.py)).
 
-iv) Run your evaluation process.
+* Run your evaluation process.
 
 ### 2. Evaluation on Existing 3D Scene Understanding Baselines
 
