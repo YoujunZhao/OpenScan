@@ -70,9 +70,9 @@ If your codebase already supports evaluation for the ScanNet or ScanNet200 bench
 
 ### 2. Evaluation on Existing 3D Scene Understanding Baselines
 
-* For OpenMask3D, please refer to [OpenMask3D](https://github.com/YoujunZhao/OpenScan/tree/main/Evaluation/openmask3d_sai3d).
+* For OpenMask3D, please refer to [OpenMask3D](https://github.com/YoujunZhao/OpenScan/tree/main/Evaluation/OpenMask3D).
 
-* For SAI3D, please refer to [SAI3D](https://github.com/YoujunZhao/OpenScan/tree/main/Evaluation/openmask3d_sai3d).
+* For SAI3D, please refer to [SAI3D](https://github.com/YoujunZhao/OpenScan/tree/main/Evaluation/SAI3D).
 
 * For MaskClustering, please refer to [MaskClustering](https://github.com/YoujunZhao/OpenScan/tree/main/Evaluation/MaskClustering).
 
