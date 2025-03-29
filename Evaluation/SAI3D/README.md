@@ -49,10 +49,10 @@ cd - && mkdir checkpoints && cd checkpoints
 wget https://github.com/UX-Decoder/Semantic-SAM/releases/download/checkpoint/swinl_only_sam_many2many.pth
 ```
 
-Install OpenMask3D(if need semantic)
+Install OpenMask3D
 ```bash
-git clone https://github.com/OpenMask3D/openmask3d.git openmask3d --recursive
-cd openmask3d
+cd ..
+cd OpenMask3D
 conda create --name=openmask3d python=3.8.5 # create new virtual environment
 conda activate openmask3d # activate it
 bash install_requirements.sh  # install requirements
@@ -148,29 +148,7 @@ data
 ### Assign semantic with OpenMask3D and conduct 3D instance segmentation evaluation
    We prove that our proposed class-agnostic masks are more accurate and can be adopted in tasks like semantic instance segmentation. Here we choose OpenMask3D to assign semantic label for our class-agnostic masks.
 
-   1. Reorganize scannet dataset 
-
-      Since OpenMask3D requires ScanNet dataset to be organized like [this](https://github.com/OpenMask3D/openmask3d/blob/fb9b/README.md?plain=1#L148-L168), we provide a script to reorganize the dataset with softlink.  
-      ```bash
-         python helpers/format_convertion.py            \
-         --app=0                                        \
-         --base_dir=PATH_TO_PREVIOUS_SCANNET_DATASET    \
-         --out_dir=PATH_TO_REORGANIZED_SCANNET_DATASET
-      ```
-      For example, 
-      ```bash
-         python helpers/format_convertion.py            \
-         --app=0                                        \
-         --base_dir="data/ScanNet"                      \
-         --out_dir="data/ScanNet_OpenMask3D"
-      ```
-      > According to the convention of OpenMask3D, color and depth image of your data should share the same resolution. If not, please replace [this line in OpenMask3D](https://github.com/OpenMask3D/openmask3d/blob/6488/openmask3d/data/load.py#L73) with the following codes to adjust the resolution of color image to the same as depth image's when loading them in OpenMask3D:
-      ```python
-         img = Image.open(img_path).convert("RGB").resize(DEPTH_RESOLUTION,Image.BILINEAR)
-         images.append(img)
-      ```
-
-   2. Prepare class-agnostic masks
+   1. Prepare class-agnostic masks
 
       We've already got class-agnosic predictions from the previous section, and exported them into evaluation format for ScanNet benchmark.
 
@@ -191,14 +169,14 @@ data
          --out_dir="data/class_agnostic_masks"
       ```
 
-   3. Assign semantic and evaluate
+   2. Assign semantic and evaluate on the **ScanNet200** or **OpenScan** dataset
    
-      We provide processed gt masks for ScanNet200 semantic instance segmentation [here](https://drive.google.com/file/d/1FYjzh6U8Em9BrKSw8f1OppgmeKtk1Ude/view?usp=sharing). 
+      We provide processed gt masks for ScanNet200 semantic instance segmentation [here](https://drive.google.com/file/d/1FYjzh6U8Em9BrKSw8f1OppgmeKtk1Ude/view?usp=sharing) and processed gt masks for OpenScan semantic instance segmentation [here](https://github.com/YoujunZhao/OpenScan?tab=readme-ov-file#benchmark-installation).
 
-      Now you can compute the per-mask scene features and run the evaluation of OpenMask3D on validation split of ScanNet200 dataset. Change the [intrinsic_resolution parameter in OpenMask3D configuration](https://github.com/OpenMask3D/openmask3d/blob/main/openmask3d/configs/openmask3d_scannet200_eval.yaml#L9) with the resolution of your `intrinsic_color.txt`. Then set the required parameter in this [script](scripts/run_openmask3d_scannet200.sh) and run the following command:
+      Now you can compute the per-mask scene features and run the evaluation of OpenMask3D on validation split of ScanNet200 or OpenScan dataset. Change the [intrinsic_resolution parameter in OpenMask3D configuration](https://github.com/YoujunZhao/OpenScan/blob/main/Evaluation/OpenMask3D/openmask3d/configs/openmask3d_scannet200_eval.yaml#L10) with the resolution of your `intrinsic_color.txt`. Then set the required parameter in this [script](scripts/run_openmask3d_scannet200_eval_sai3d.sh) and run the following command:
       
       ```bash
-      bash scripts/run_openmask3d_scannet200.sh
+      bash scripts/run_openmask3d_scannet200_eval_sai3d.sh
       ```
 
-      This script first computes the mask features associated with each class-agnostic mask, and then query masks with 200 class names in ScanNet200 to assign semantic label for them. Afterwards, the evaluation script automatically runs in order to obtain 3D closed-vocabulary semantic instance segmentation scores.
+      This script first computes the mask features associated with each class-agnostic mask, and then query masks with class names in ScanNet200 or OpenScan to assign semantic label for them. Afterwards, the evaluation script automatically runs in order to obtain 3D semantic instance segmentation scores.
