@@ -21,7 +21,7 @@ EXPERIMENT_NAME="scannet200"
 OUTPUT_DIRECTORY="$(pwd)/output"
 TIMESTAMP=$(date +"%Y-%m-%d-%H-%M-%S")
 # OUTPUT_FOLDER_DIRECTORY="${OUTPUT_DIRECTORY}/${TIMESTAMP}-${EXPERIMENT_NAME}"
-OUTPUT_FOLDER_DIRECTORY="/home/zyj/mnt/openmask3d/output/sai3d"
+OUTPUT_FOLDER_DIRECTORY="./openmask3d/output/sai3d"
 MASK_SAVE_DIR="${OUTPUT_FOLDER_DIRECTORY}/masks"
 MASK_FEATURE_SAVE_DIR="${OUTPUT_FOLDER_DIRECTORY}/mask_features"
 SAVE_VISUALIZATIONS=false #if set to true, saves pyviz3d visualizations
@@ -29,7 +29,7 @@ SAVE_VISUALIZATIONS=false #if set to true, saves pyviz3d visualizations
 # Paremeters below are AUTOMATICALLY set based on the parameters above:
 SCANNET_LABEL_DB_PATH="${SCANNET_PROCESSED_DIR%/}/label_database.yaml"
 # SCANNET_INSTANCE_GT_DIR="${SCANNET_PROCESSED_DIR%/}/instance_gt/gt_element_openmask3d"
-SCANNET_INSTANCE_GT_DIR="/home/zyj/mnt/openmask3d/openmask3d/class_agnostic_mask_computation/data/processed/scannet/instance_gt/validation"
+SCANNET_INSTANCE_GT_DIR="./openmask3d/openmask3d/class_agnostic_mask_computation/data/processed/scannet/instance_gt/validation"
 
 # gpu optimization
 OPTIMIZE_GPU_USAGE=false

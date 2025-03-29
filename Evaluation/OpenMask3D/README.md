@@ -171,8 +171,8 @@ scans                                       <- out folder
 ### Step 3: Set-up paths to data and to output folders 🛤
 Modify the paths and parameters in [this script](run_openmask3d_scannet200_eval.sh), following the instructions provided there.
 
-### Step 4: Run OpenMask3D on ScanNet200 🚀
- Now you can compute the per-mask scene features and run the evaluation of OpenMask3D on the whole ScanNet200 dataset by using the following command:
+### Step 4: Run OpenMask3D on ScanNet200 or OpenScan 🚀
+ Now you can compute the per-mask scene features and run the evaluation of OpenMask3D on the ScanNet200 or OpenScan dataset. Change the "./openmask3d/evaluation/scannet_constants.py" and "./openmask3d/evaluation/eval_semantic_instance.py" to choose to evaluate on ScanNet or the OpenScan dataset. Then use the following command:
  ```bash
 bash run_openmask3d_scannet200_eval.sh
 ```

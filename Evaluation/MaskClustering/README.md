@@ -186,8 +186,10 @@ cd preprocess/matterport3d
 python process.py
 ```
 
-## Running Experiments
+## Running Experiments on ScanNet and OpenScan
 Simply find the corresponding config in the 'configs' folder and run the following command. **Remember to change the 'cropformer_path' variable in the config and the 'CUDA_LIST' variable in the run.py.**
+
+You can change the "./evaluation/constants.py" file to choose to evaluate on ScanNet or the OpenScan dataset.
 ```bash
   python run.py --config config_name
 ```
@@ -196,6 +198,7 @@ For example, to run the ScanNet experiment, you can run the following command:
   python run.py --config scannet
 ```
 This run.py will get the 2D instance masks, run mask clustering, get open-vocabulary features and evaluate the results. The evaluation results will be saved in the 'data/evaluation' folder.
+
 
 
 ### Time cost
