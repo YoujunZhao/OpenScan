@@ -13,7 +13,7 @@ from tqdm import tqdm
 ## ScanNet200
 scan_eval = ScanNetEval(class_labels=INSTANCE_CAT_SCANNET_200, dataset_name = 'scannet200')
 
-data_path = "../exp_0/version_text/final_result_hier_agglo_gov_merge_800"
+data_path = "../exp_0/version_text/final_result_hier_agglo"
 pcl_path = "./data/Scannet200/Scannet200_3D/val/groundtruth"
 
 # data_path = "../exp_scannetpp/version_benchmarkinstance_val/final_result_hier_agglo"
@@ -24,6 +24,7 @@ pcl_path = "./data/Scannet200/Scannet200_3D/val/groundtruth"
 
 if __name__ == "__main__":
     scenes = sorted([s for s in os.listdir(data_path) if s.endswith(".pth")])
+
     gtsem = []
     gtinst = []
     res = []
@@ -33,15 +34,22 @@ if __name__ == "__main__":
         gt_path = os.path.join(pcl_path, scene)
         loader = torch.load(gt_path)
 
+        gt_txt_path = os.path.join(gt_txt_base_path, scene.replace('pth', 'txt'))
+        gt_ids = np.loadtxt(gt_txt_path)
+
         sem_gt, inst_gt = loader[2], loader[3]
+
+        sem_gt= loader[2]
+        sem_gt = gt_ids // 1000
+        inst_gt = gt_ids % 1000
+
         gtsem.append(np.array(sem_gt).astype(np.int32))
         gtinst.append(np.array(inst_gt).astype(np.int32))
 
         scene_path = os.path.join(data_path, scene)
         pred_mask = torch.load(scene_path)
+
         masks, category, score = pred_mask["ins"], pred_mask["final_class"], pred_mask["conf"]
-        
-        # score = torch.max(score, dim = -1)[0]
 
         n_mask = category.shape[0]
         tmp = []
@@ -50,12 +58,8 @@ if __name__ == "__main__":
                 mask = rle_decode(masks[ind])
             else:
                 mask = (masks[ind] == 1).numpy().astype(np.uint8)
-            conf = 1.0 # Normal OpenVocab
-            # try:
-            #     conf = score[ind].item() # CLIP-based OpenVocab
-            # except:
-            #     conf = score[ind] # CLIP-based OpenVocab
-
+            # conf = score[ind] #
+            conf = 1.0
             final_class = float(category[ind])
             scene_id = scene.replace(".pth", "")
             tmp.append({"scan_id": scene_id, "label_id": final_class + 1, "conf": conf, "pred_mask": mask})
