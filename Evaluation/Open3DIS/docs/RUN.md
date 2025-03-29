@@ -30,7 +30,7 @@ sh scripts/vis.sh
 
 5\) Run evaluation:
 
-We provided custom evaluation script. You can select the "./open3dis/dataset/scannet200.py" file to choose to evaluate on ScanNet or the OpenScan dataset. Remember to change the "data_path" to your output file path and "gt_txt_base_path" to your gt file path.
+We provided custom evaluation script. You can select the [./open3dis/dataset/scannet200.py](https://github.com/YoujunZhao/OpenScan/tree/main/Evaluation/Open3DIS/open3dis/dataset) file to choose to evaluate on ScanNet or the OpenScan dataset. Remember to change the "data_path" to your output file path and "gt_txt_base_path" in [./open3dis/evaluation/eval.py](https://github.com/YoujunZhao/OpenScan/blob/main/Evaluation/Open3DIS/open3dis/evaluation/eval.py) to your gt file path.
 ```
 sh scripts/eval.sh
 ```
