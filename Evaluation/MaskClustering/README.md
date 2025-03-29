@@ -189,7 +189,7 @@ python process.py
 ## Running Experiments on ScanNet and OpenScan
 Simply find the corresponding config in the 'configs' folder and run the following command. **Remember to change the 'cropformer_path' variable in the config and the 'CUDA_LIST' variable in the run.py.**
 
-You can choose the [./evaluation/constants.py](https://github.com/YoujunZhao/OpenScan/tree/main/Evaluation/MaskClustering/evaluation) file to choose to evaluate on ScanNet or the OpenScan dataset.
+You can select the [./evaluation/constants.py](https://github.com/YoujunZhao/OpenScan/tree/main/Evaluation/MaskClustering/evaluation) file to choose to evaluate on ScanNet or the OpenScan dataset.
 ```bash
   python run.py --config config_name
 ```
