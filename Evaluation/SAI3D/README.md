@@ -173,7 +173,7 @@ data
    
       We provide processed gt masks for ScanNet200 semantic instance segmentation [here](https://drive.google.com/file/d/1FYjzh6U8Em9BrKSw8f1OppgmeKtk1Ude/view?usp=sharing) and processed gt masks for OpenScan semantic instance segmentation [here](https://github.com/YoujunZhao/OpenScan?tab=readme-ov-file#benchmark-installation).
 
-      Now you can compute the per-mask scene features and run the evaluation of OpenMask3D on validation split of ScanNet200 or OpenScan dataset. Change the [intrinsic_resolution parameter in OpenMask3D configuration](https://github.com/YoujunZhao/OpenScan/blob/main/Evaluation/OpenMask3D/openmask3d/configs/openmask3d_scannet200_eval.yaml#L10) with the resolution of your `intrinsic_color.txt`. Then set the required parameter in this [script](scripts/run_openmask3d_scannet200_eval_sai3d.sh) and run the following command:
+      Now you can compute the per-mask scene features and run the evaluation of OpenMask3D on validation split of ScanNet200 or OpenScan dataset. Change the [intrinsic_resolution parameter in OpenMask3D configuration](https://github.com/YoujunZhao/OpenScan/blob/main/Evaluation/OpenMask3D/openmask3d/configs/openmask3d_scannet200_eval.yaml#L10) with the resolution of your `intrinsic_color.txt`. Then set the required parameter in this [script](https://github.com/YoujunZhao/OpenScan/blob/main/Evaluation/OpenMask3D/run_openmask3d_scannet200_eval_sai3d.sh) and run the following command:
       
       ```bash
       bash scripts/run_openmask3d_scannet200_eval_sai3d.sh
