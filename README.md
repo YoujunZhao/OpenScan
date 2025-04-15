@@ -27,7 +27,7 @@
 
 ## News
 
-* **18 Oct 2024**: Release the evaluationn code of OpenScan benchmark. 💻
+* **18 Oct 2024**: Release the evaluation code of OpenScan benchmark. 💻
 * **27 Aug 2024**: Release the validation set of OpenScan benchmark. 🧩
 * **20 Aug 2024**: [OpenScan](https://arxiv.org/abs/2408.11030) released on arXiv. 📝
 
