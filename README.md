@@ -69,6 +69,7 @@ If your codebase already supports evaluation for the ScanNet or ScanNet200 bench
 * Run your evaluation process.
 
 ### 2. Evaluation on Existing 3D Scene Understanding Baselines
+If you want to evaluate OpenMask3D, SAI3D, MaskClustering, or Open3DIS on the OpenScan benchmark, you can first clone the repository and then:
 
 * For OpenMask3D, please refer to [OpenMask3D](https://github.com/YoujunZhao/OpenScan/tree/main/Evaluation/OpenMask3D).
 
