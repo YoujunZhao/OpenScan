@@ -40,17 +40,17 @@ You can also download the processed validation set from [OneDrive](https://portl
 
 ```python
     {
-        "scene_id":    "scene0011_00",           (ScanNet scene id)
-        "object_id":   "0",                      (ScanNet object id)
-        "object_name": "chair",                  (ScanNet object name)
-        "material":    "wood",                   (ScanNet object material)
-        "affordance":  "sleep",                  (ScanNet object affordance)
-        "property":    "soft",                   (ScanNet object property)
-        "type":        "source of illumination", (ScanNet object type)
-        "manner":      "steered by handlebars",  (ScanNet object manner)
-        "synonyms":    "bedside table",          (ScanNet object synonyms)
-        "requirement": "water and sun",          (ScanNet object requirement)
-        "element":     "88 keys"                 (ScanNet object element)
+        "scene_id":    "scene0011_00",           
+        "object_id":   "0",                      
+        "object_name": "chair",                  
+        "material":    "wood",                  
+        "affordance":  "sleep",                  
+        "property":    "soft",                  
+        "type":        "source of illumination", 
+        "manner":      "steered by handlebars",  
+        "synonyms":    "bedside table",         
+        "requirement": "water and sun",          
+        "element":     "88 keys"                
     },
 
 ```
