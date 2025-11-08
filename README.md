@@ -12,6 +12,7 @@
     <sup>1</sup>City University of Hong Kong, 
     <sup>2</sup>South China University of Technology
   </p>
+    <h2 align="center">AAAI 2026</h2>
   <h3 align="center"><a href="https://arxiv.org/abs/2408.11030">📄[arXiv]</a> | <a href="https://youjunzhao.github.io/OpenScan/">🔥[Project]</a> | <a href="https://github.com/YoujunZhao/OpenScan">💻[Code]</a> | <a href="https://github.com/YoujunZhao/OpenScan?tab=readme-ov-file#benchmark-installation">🧩[Data]</a> </h3>
   <div align="center"></div>
 </p>
