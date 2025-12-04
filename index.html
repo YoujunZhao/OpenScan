@@ -1,365 +1,749 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8" />
+  <title>OpenScan: A Benchmark for Generalized Open-Vocabulary 3D Scene Understanding</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description"
-        content="Deformable Neural Radiance Fields creates free-viewpoint portraits (nerfies) from casually captured videos.">
-  <meta name="keywords" content="Nerfies, D-NeRF, NeRF">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>OpenScan</title>
+        content="OpenScan: A benchmark for generalized open-vocabulary 3D scene understanding with attribute-level annotations across eight linguistic aspects." />
 
-  <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
+  <link rel="icon" href="static/favicon.svg" type="image/svg+xml" />
 
-    function gtag() {
-      dataLayer.push(arguments);
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-alt: #f9fafb;
+      --card-bg: #ffffff;
+      --accent: #14b8a6;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --border-subtle: rgba(15, 23, 42, 0.08);
+      --max-width: 960px;
+      --radius-lg: 18px;
+      --radius-xl: 22px;
+      --shadow-soft: 0 14px 36px rgba(15, 23, 42, 0.08);
     }
 
-    gtag('js', new Date());
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
-    gtag('config', 'G-PYVRSFMDRL');
-  </script>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui,
+        -system-ui, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #f4f4f5 0, #f9fafb 30%, #ffffff 100%);
+      color: var(--text-main);
+      line-height: 1.7;
+    }
 
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-        rel="stylesheet">
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
-  <link rel="stylesheet" href="./static/css/bulma.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link rel="stylesheet" href="./static/css/index.css">
+    /* 顶部导航 */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(16px);
+      background: rgba(255, 255, 255, 0.92);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.35);
+    }
+    .nav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 8px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .nav-title {
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #0f172a;
+    }
+    .nav-dot {
+      width: 8px; height: 8px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #0ea5e9, #22c55e 60%, #0f172a);
+      box-shadow: 0 0 10px rgba(56, 189, 248, 0.7);
+    }
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 14px;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+    }
+    .nav-links a:hover {
+      border-color: rgba(148, 163, 184, 0.9);
+      background: #f3f4f6;
+      color: #111827;
+      text-decoration: none;
+    }
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="./static/js/fontawesome.all.min.js"></script>
-  <script src="./static/js/bulma-carousel.min.js"></script>
-  <script src="./static/js/bulma-slider.min.js"></script>
-  <script src="./static/js/index.js"></script>
+    /* 页面布局 */
+    .page {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 26px 18px 70px;
+    }
+    section {
+      margin-top: 44px;
+    }
+    section:first-of-type { margin-top: 26px; }
+
+    h1, h2, h3 {
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+    /* 标题稍微小一点并居中 */
+    h1 {
+      font-size: clamp(32px, 4.8vw, 40px);
+      line-height: 1.12;
+      margin-bottom: 14px;
+      color: #0f172a;
+      text-align: center;
+    }
+
+    .section-subtitle {
+      font-size: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #0f766e;
+      margin-bottom: 6px;
+    }
+
+    /* AAAI 2026：移到单位下面并加大字号 */
+    .section-subtitle.venue {
+      font-size: 20px;
+      letter-spacing: 0.20em;
+      font-weight: 600;
+      text-align: center;
+      margin-top: 6px;
+      margin-bottom: 2px;
+    }
+
+    p {
+      font-size: 16px;
+      color: var(--text-main);
+    }
+    .muted {
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+    .small {
+      font-size: 15px;
+    }
+    .highlight {
+      color: #0f172a;
+      font-weight: 500;
+    }
+
+    /* hero 上半部分整体居中 */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .hero-header {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      align-items: center;
+      text-align: center;
+    }
+
+    .authors {
+      font-size: 17px;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+      text-align: center;
+    }
+    .authors a {
+      color: #111827;
+      font-weight: 500;
+    }
+
+    .affiliations {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-top: 2px;
+      text-align: center;
+    }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+      justify-content: center;
+    }
+    .badge {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      color: var(--text-muted);
+      background: #f9fafb;
+    }
+
+    .links-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 8px 18px;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      background: #ffffff;
+      font-size: 15px;
+      color: #0f172a;
+      font-weight: 500;
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08);
+    }
+    .btn.secondary {
+      background: #ffffff;
+      border-style: solid;
+    }
+    .btn span.icon {
+      font-size: 18px;
+    }
+
+    /* TLDR + 图 横向布局 */
+    .hero-bottom {
+      display: flex;
+      gap: 18px;
+      align-items: stretch;
+      margin-top: 8px;
+      width: 100%;
+    }
+
+    .tldr {
+      flex: 0 0 40%;
+      max-width: 40%;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: #ecfeff;
+      border: 1px solid rgba(45, 212, 191, 0.4);
+      font-size: 15px;
+      color: #0f172a;
+    }
+
+    .teaser-card {
+      flex: 0 0 58%;
+      max-width: 58%;
+      border-radius: var(--radius-xl);
+      padding: 14px;          /* ⇠ 原来是 8px，增大图片与框的距离 */
+      background: #ffffff;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .teaser-card img {
+      width: 100%;
+      max-height: 320px;
+      object-fit: contain;
+      border-radius: 14px;
+      background: #ffffff;
+      display: block;
+    }
+    .hero-caption {
+      margin-top: 5px;
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      padding: 14px 16px 12px;
+      box-shadow: var(--shadow-soft);
+      margin-top: 14px;
+    }
+    .card-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .pill {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #f9fafb;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+    }
+
+    ul {
+      margin-left: 1.1rem;
+      margin-top: 4px;
+      font-size: 15px;
+      color: var(--text-main);
+    }
+    li + li { margin-top: 2px; }
+
+    .img-frame {
+      border-radius: 16px;
+      padding: 10px;             /* ⇠ 原来 4px，加大内部留白 */
+      background: #ffffff;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      box-shadow: var(--shadow-soft);
+      margin-top: 10px;
+    }
+    .img-frame img {
+      width: 100%;
+      max-height: 420px;
+      object-fit: contain;
+      display: block;
+      border-radius: 12px;
+    }
+    .img-caption {
+      margin-top: 6px;
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    .img-frame-wide {
+      border-radius: 16px;
+      padding: 10px;             /* ⇠ 同样加大 padding */
+      background: #ffffff;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      box-shadow: var(--shadow-soft);
+      margin-top: 10px;
+    }
+    .img-frame-wide img {
+      width: 100%;
+      max-height: 640px;
+      object-fit: contain;
+      display: block;
+      border-radius: 12px;
+    }
+
+    .img-pair {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 2px;
+    }
+    .img-single {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .img-single img {
+      width: 100%;
+      max-height: 640px;
+      object-fit: contain;
+      border-radius: 12px;
+    }
+    .img-single .img-caption {
+      font-size: 15px;
+      margin-top: 2px;
+      text-align: center;
+    }
+
+    pre {
+      background: #f9fafb;
+      color: #111827;
+      font-size: 13px;
+      padding: 12px;
+      border-radius: 10px;
+      overflow-x: auto;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+    }
+
+    footer {
+      margin-top: 34px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(148, 163, 184, 0.4);
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    @media (max-width: 900px) {
+      .hero-bottom {
+        flex-direction: column;
+      }
+      .tldr,
+      .teaser-card {
+        flex: 0 0 auto;
+        max-width: 100%;
+      }
+      .teaser-card img {
+        max-height: 340px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page { padding-inline: 14px; }
+      .img-pair {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 800px) {
+      .nav-inner { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
 </head>
+
 <body>
-
-<nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-  <div class="navbar-menu">
-    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-      <a class="navbar-item" href="https://keunhong.com">
-      <span class="icon">
-          <i class="fas fa-home"></i>
-      </span>
-      </a>
-
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
-          More Research
-        </a>
-        <div class="navbar-dropdown">
-          <a class="navbar-item" href="https://youjunzhao.github.io/HCMA/">
-            HCMA
-          </a>
-        </div>
+  <!-- NAVBAR -->
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="nav-title">
+        <div class="nav-dot"></div>
+        <span>OpenScan</span>
       </div>
+      <nav class="nav-links">
+        <a href="#overview">Overview</a>
+        <a href="#task-benchmark">Task &amp; Benchmark</a>
+        <a href="#dataset">Dataset</a>
+        <a href="#results">Results</a>
+        <a href="#engine">Data Engine</a>
+        <a href="#visualization">Visualization</a>
+        <a href="#bibtex">BibTeX</a>
+      </nav>
     </div>
+  </header>
 
-  </div>
-</nav>
+  <main class="page">
+    <!-- HERO -->
+    <section id="overview">
+      <div class="hero">
+        <div class="hero-header">
+          <h1>OpenScan: A Benchmark for Generalized Open-Vocabulary 3D Scene Understanding</h1>
 
+          <p class="authors">
+            <a href="https://youjunzhao.github.io" target="_blank" rel="noreferrer">Youjun Zhao</a><sup>1</sup>,
+            <a href="https://jiaying.link/" target="_blank" rel="noreferrer">Jiaying Lin</a><sup>1,2</sup>,
+            <a href="https://shuquanye.com/" target="_blank" rel="noreferrer">Shuquan Ye</a><sup>1,3</sup>,
+            <a href="https://qspang.github.io/" target="_blank" rel="noreferrer">Qianshi Pang</a><sup>4</sup>,
+            <a href="https://www.cs.cityu.edu.hk/~rynson/" target="_blank" rel="noreferrer">Rynson W. H. Lau</a><sup>1</sup>
+          </p>
+          <p class="affiliations">
+            <sup>1</sup>City University of Hong Kong,
+            <sup>2</sup>The Hong Kong University of Science and Technology<br>
+            <sup>3</sup>The Chinese University of Hong Kong,
+            <sup>4</sup>South China University of Technology
+          </p>
 
-<section class="hero">
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">OpenScan: A Benchmark for Generalized Open-Vocabulary 3D Scene Understanding</h1>
+          <div class="section-subtitle venue">AAAI 2026</div>
 
-          <div class="is-size-5 publication-authors">
-            <span class="author-block">
-              <a href="https://youjunzhao.github.io">Youjun Zhao</a><sup>1</sup>,</span>
-            <span class="author-block">
-              <a href="https://jiaying.link">Jiaying Lin</a><sup>1</sup>,</span>
-            <span class="author-block">
-              <a href="https://shuquanye.com/">Shuquan Ye</a><sup>1</sup>,</span>
-            <span class="author-block">
-              <a href="https://qspang.github.io/">Qianshi Pang</a><sup>2</sup>,</span>
-            <span class="author-block">
-              <a href="https://www.cs.cityu.edu.hk/~rynson/">Rynson W. H. Lau</a><sup>1</sup>
-            </span>
+          <div class="links-row">
+            <a class="btn" href="https://arxiv.org/abs/2408.11030" target="_blank" rel="noreferrer">
+              <span class="icon">📄</span><span>Paper</span>
+            </a>
+            <a class="btn secondary" href="https://github.com/YoujunZhao/OpenScan" target="_blank" rel="noreferrer">
+              <span class="icon">💻</span><span>Code</span>
+            </a>
+            <a class="btn secondary" href="https://github.com/YoujunZhao/OpenScan?tab=readme-ov-file#benchmark-installation" target="_blank" rel="noreferrer">
+              <span class="icon">📦</span><span>Dataset</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-bottom">
+          <div class="tldr">
+            <h3>TL;DR:</h3>
+            We propose GOV-3D, a task where 3D scenes are queried by attributes
+            (e.g., <em>affordance and material</em>) instead of only object classes.<br><br>
+            OpenScan is a benchmark with attribute annotations covering eight linguistic aspects.
           </div>
 
-<div class="is-size-5 publication-authors">
-  <span class="author-block"><sup>1</sup> City University of Hong Kong</span><br>
-  <span class="author-block"><sup>2</sup> South China University of Technology</span><br>
-  <span class="author-block" style="font-size: 1.5em; font-weight: bold;">AAAI 2026</span>
-</div>
-
-
-          <div class="column has-text-centered">
-            <div class="publication-links">
-              <!-- PDF Link. -->
-              <span class="link-block">
-                <a href="https://arxiv.org/abs/2408.11030"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="ai ai-arxiv"></i>
-                  </span>
-                  <span>arXiv</span>
-                </a>
-              </span>
-              <!-- Code Link. -->
-              <span class="link-block">
-                <a href="https://github.com/YoujunZhao/OpenScan"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-github"></i>
-                  </span>
-                  <span>Code</span>
-                  </a>
-              </span>
-              <!-- Dataset Link. -->
-              <span class="link-block">
-                <a href="https://github.com/YoujunZhao/OpenScan?tab=readme-ov-file#benchmark-installation"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="far fa-images"></i>
-                  </span>
-                  <span>Data</span>
-                  </a>
+          <div class="teaser-card">
+            <img src="static/teasor.svg" alt="OpenScan teaser illustration." />
+            <div class="hero-caption">
+              GOV-3D extends classic OV-3D from class queries to attribute queries.
             </div>
-
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-  <section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="hero-body">
-      <!-- <video id="teaser" autoplay muted loop playsinline height="100%">
-        <source src="./static/videos/teaser.mp4"
-                type="video/mp4">
-      </video> -->
-      <h2 class="subtitle has-text-centered">
-        <b>TL;DR:</b> We introduce a novel task and benchmark to assess the generalization ability of current 3D scene understanding models to open-set object attribute vocabularies.
-      </h2>
-    </div>
-  </div>
-</section>
+    <!-- TASK & BENCHMARK -->
+    <section id="task-benchmark">
+      <div class="section-subtitle">Task &amp; Benchmark</div>
+      <h2>From OV-3D to GOV-3D</h2>
 
-<section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <h2 class="title is-3" id="task">Task</h2>
-    </div>
-    <div class="hero-body">
-      <!-- <video id="teaser" autoplay muted loop playsinline height="100%">
-        <source src="./static/videos/teaser.mp4"
-                type="video/mp4">
-      </video> -->
-      <img src="./static/images/teasor.svg" alt>
-      <h2 class="subtitle has-text-centered">
-        Generalized Open-Vocabulary 3D Scene Understanding (GOV-3D) task expands the vocabulary types of the classic 3D Scene Understanding (OV-3D) task. While OV-3D only supports queries of object classes, GOV-3D supports queries of object-related abstract attributes.
-      </h2>
-    </div>
-  </div>
-</section>
+      <div class="card">
+        <div class="card-header">
+          <h3>GOV-3D Task</h3>
+          <span class="pill">Problem</span>
+        </div>
+        <p class="small">
+          Classical open-vocabulary 3D scene understanding (OV-3D) localizes objects from
+          object class names. GOV-3D extends it to attribute-level queries, such as <em>affordance and material</em>. The model need to both locate the correct object
+          and understand the semantics behind the attribute.
+        </p>
+      </div>
 
-<section class="hero teaser">
-  <div class="container is-max-desktop">
-     <div class="columns is-centered has-text-centered">
-      <h2 class="title is-3" id="benchmark">Benchmark</h2>
-    </div>
-    <div class="hero-body">
-      <!-- <video id="teaser" autoplay muted loop playsinline height="100%">
-        <source src="./static/videos/teaser.mp4"
-                type="video/mp4">
-      </video> -->
-      <img src="./static/images/dataset_vis.png" alt>
-      <h2 class="subtitle has-text-centered">
-      OpenScan benchmark provides attribute annotations for each object, expanding the single category of object classes into eight linguistic aspects of object-related attributes.
-      </h2>
-    </div>
-  </div>
-</section>
+      <div class="card">
+        <div class="card-header">
+          <h3>Why a New Benchmark?</h3>
+          <span class="pill">Motivation</span>
+        </div>
+        <p class="small">
+          Existing benchmarks like ScanNet, ScanNet200, and ScanNet++ mainly label object classes
+          and cannot directly assess how well models understand attributes such as
+          <em>affordance</em> and <em>material</em>. OpenScan fills this gap
+          by providing attribute annotations on top of ScanNet200, allowing us to measure 3D
+          understanding from multiple linguistic aspects.
+        </p>
+      </div>
 
-  
-<section class="section">
-  <div class="container is-max-desktop">
-    <!-- Abstract. -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p>
-            Open-vocabulary 3D scene understanding (OV-3D) aims to localize and classify novel objects beyond the closed object classes. However, existing approaches and benchmarks primarily focus on the open vocabulary problem within the context of object classes, which is insufficient to provide a holistic evaluation to what extent a model understands the 3D scene. In this paper, we introduce a more challenging task called Generalized Open-Vocabulary 3D Scene Understanding (GOV-3D) to explore the open vocabulary problem beyond object classes. It encompasses an open and diverse set of generalized knowledge, expressed as linguistic queries of fine-grained and object-specific attributes. To this end, we contribute a new benchmark named <b>OpenScan</b>, which consists of 3D object attributes across eight representative linguistic aspects, including affordance, property, material, and more. We further evaluate state-of-the-art OV-3D methods on our OpenScan benchmark, and discover that these methods struggle to comprehend the abstract vocabularies of the GOV-3D task, a challenge that cannot be addressed by simply scaling up object classes during training. We highlight the limitations of existing methodologies and explore a promising direction to overcome the identified shortcomings.
-         </p>
+      <div class="img-frame">
+        <img src="static/dataset_vis.png" alt="Overview of OpenScan GOV-3D benchmark." />
+        <div class="img-caption">
+          OpenScan benchmark provides attribute annotations for each object, expanding the single category of object classes into eight linguistic aspects of object-related attributes.
         </div>
       </div>
-    </div>
-    <!--/ Abstract. -->
 
+      <div class="card">
+        <div class="card-header">
+          <h3>Eight Linguistic Aspects of Object Attributes</h3>
+          <span class="pill">Attribute Categorized</span>
+        </div>
+        <p class="small">
+          OpenScan expands each object from a single class label into a rich set of attributes
+          across eight linguistic aspects:
+        </p>
+        <ul>
+          <li><strong>Affordance</strong> – is the object function or usage (e.g., “<em>sit</em>” for a chair).</li>
+          <li><strong>Property</strong> – indicates the object characteristic (e.g., “<em>soft</em>” for a pillow).</li>
+          <li><strong>Type</strong> – indicates the object category or group (e.g., “</em>a communication device</em>” for a telephone).</li>
+          <li><strong>Manner</strong> – indicates the object behavior (e.g., “</em>worn on a head</em>” for a hat).</li>
+          <li><strong>Synonyms</strong> – is a term with a similar meaning (e.g., “</em>image”for a picture</em>).</li>
+          <li><strong>Requirement</strong> – indicates an essential condition that an object should possess to fulfill a specific need (e.g., “</em>balance to ride</em>” for a bicycle).</li>
+          <li><strong>Element</strong> – indicates an individual component or part that constitutes the object (e.g., “</em>two wheels</em>” for a bicycle).</li>
+          <li><strong>Material</strong> – indicates the type of material of the object (e.g., “</em>plastic</em>” for a bottle).</li>
+        </ul>
+      </div>
+    </section>
 
-  </div>
-</section>
+    <!-- DATASET -->
+    <section id="dataset">
+      <div class="section-subtitle">Dataset</div>
+      <h2>OpenScan at a Glance</h2>
 
+      <div class="card">
+        <div class="card-header">
+          <h3>Benchmark Statistics</h3>
+          <span class="pill">Overview</span>
+        </div>
+        <p class="small">
+          OpenScan is constructed on top of ScanNet200 and inherits its large-scale 3D indoor scenes
+          while adding attribute annotations. Each object can be queried by multiple attribute
+          , enabling attribute-centric evaluation in both semantic and instance settings.
+        </p>
+      </div>
 
-  
+      <!-- 主统计图：openscan_stats_final_outer -->
+      <div class="img-frame">
+        <img src="static/openscan_stats_final_outer.png"
+             alt="Overall statistics of the OpenScan dataset." />
+        <div class="img-caption">
+          OpenScan benchmark statistics of object-related attributes for the eight linguistic aspects.
+        </div>
+      </div>
+    </section>
 
+    <!-- RESULTS -->
+    <section id="results">
+      <div class="section-subtitle">Experiments</div>
+      <h2>How Well Do Existing OV-3D Methods Generalize?</h2>
 
+      <div class="card">
+        <div class="card-header">
+          <h3>3D Instance Segmentation on OpenScan</h3>
+          <span class="pill">Quantitative</span>
+        </div>
+        <p class="small">
+          We benchmark multiple state-of-the-art OV-3D models on attribute-centric GOV-3D evaluation.
+          While these methods perform strongly on class-level queries, their performance drops
+          significantly on attribute queries, revealing a large gap between class recognition
+          and attribute understanding.
+        </p>
+      </div>
 
-  <section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <h2 class="title is-3" id="quantitative">Quantitative Results on OpenScan</h2>
-    </div>
-    <div class="hero-body">
-      <!-- <video id="teaser" autoplay muted loop playsinline height="100%">
-        <source src="./static/videos/teaser.mp4"
-                type="video/mp4">
-      </video> -->
-      <img src="./static/images/radar.png" alt>
-      <h2 class="subtitle has-text-centered">
-      3D instance segmentation results on our OpenScan benchmark.
-      </h2>
-    </div>
-  </div>
-</section>
+      <div class="img-frame">
+        <img src="static/3dis.png" alt="3D instance segmentation results on OpenScan." />
+        <div class="img-caption">
+          3D instance segmentation performance of several OV-3D methods on the OpenScan benchmark.
+        </div>
+      </div>
 
-    <section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <h2 class="title is-3" id="quantitative">Qualitative Results on OpenScan</h2>
-    </div>
-    <div class="hero-body">
-      <!-- <video id="teaser" autoplay muted loop playsinline height="100%">
-        <source src="./static/videos/teaser.mp4"
-                type="video/mp4">
-      </video> -->
-      <img src="./static/images/qualitative.png" alt>
-    </div>
-  </div>
-</section>
+      <div class="img-frame">
+        <img src="static/radar.png"
+             alt="Radar chart of quantitative GOV-3D performance across attribute aspects." />
+        <div class="img-caption">
+          Radar chart of quantitative GOV-3D performance across eight linguistic aspects on our OpenScan benchmark.
+        </div>
+      </div>
 
+      <div class="card">
+        <div class="card-header">
+          <h3>Qualitative Findings</h3>
+          <span class="pill">Qualitative</span>
+        </div>
+        <p class="small">
+          Visual results shows that models often succeed on class queries but fail for GOV-3D attribute
+          queries.
+        </p>
+      </div>
 
+      <div class="img-frame">
+        <img src="static/qualitative.png" alt="Qualitative results on OpenScan." />
+        <div class="img-caption">
+          Qualitative results of Open3DIS on our OpenScan benchmark. The GT objects and outputs are highlighted in color.
+        </div>
+      </div>
 
+      <div class="img-frame-wide">
+        <img src="static/failure_case_supp.png" alt="Failure cases on GOV-3D." />
+        <div class="img-caption">
+          Typical failure patterns on GOV-3D: complex commonsense knowledge, noisy 3D geometry, and tiny target objects.
+        </div>
+      </div>
+    </section>
 
-<section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="hero-body">
-      <!-- <video id="teaser" autoplay muted loop playsinline height="100%">
-        <source src="./static/videos/teaser.mp4"
-                type="video/mp4">
-      </video> -->
-      <img src="./static/images/failure_case_supp.png" alt>
-      <p>
-          The baseline model fails in the GOV task when: (a) the attribute query requires complex commonsense knowledge; (b) the target 3D object contains noisy geometry; and (c) the target object is small, but it correctly predicts 3D masks for attribute-related class queries in the OV-3D task under these scenarios.
+    <!-- DATA ENGINE -->
+    <section id="engine">
+      <div class="section-subtitle">Data Engine</div>
+      <h2>Attribute Annotation via Knowledge Graph &amp; Human Feedback</h2>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>Knowledge-Driven Attribute Mining</h3>
+          <span class="pill">Automatic</span>
+        </div>
+        <p class="small">
+          We first associate ScanNet200 objects with attributes using the ConceptNet knowledge graph.
+          Graph edges connect object nodes and attribute nodes, allowing us to retrieve
+          candidate attribute terms for each object and each linguistic aspect.
+        </p>
+      </div>
+
+      <div class="img-frame">
+        <img src="static/data_engine.png" alt="OpenScan knowledge graph based data engine." />
+        <div class="img-caption">
+          Illustration of the data generation process for our OpenScan benchmark.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h3>Manual Annotation</h3>
+          <span class="pill">Manual</span>
+        </div>
+        <p class="small">
+          For the visual attribute that cannot be
+          inferred without human perception, we manually annotate
+          each 3D object by creating a
+          web interface for annotators to select each object's visual
+          attribute.
+        </p>
+      </div>
+
+      <div class="img-frame">
+        <img src="static/annotate.png" alt="Annotation interface used to label 3D attributes." />
+        <div class="img-caption">
+          Web interface for manual annotation that allows users to view the 3D scene from multiple viewpoints and select the target object by clicking.
+        </div>
+      </div>
+    </section>
+
+    <!-- VISUALIZATION -->
+    <section id="visualization">
+      <div class="section-subtitle">Visualization</div>
+      <h2>Visualizations of OpenScan Benchmark Formats and Samples</h2>
+
+      <div class="card">
+        <p class="small">
+          Below are visualizations of OpenScan benchmark formats and samples of eight linguistic aspects.
+        </p>
+      </div>
+
+      <div class="img-frame">
+        <img src="static/dataset_vis_add_1.png" alt="Examples of objects and corresponding attributes." />
+        <div class="img-caption">
+          Examples of objects and corresponding attributes in our OpenScan benchmark.
+        </div>
+      </div>
+
+      <div class="img-frame-wide">
+        <div class="img-pair">
+          <figure class="img-single">
+            <img src="static/data_vis_add_2.png" alt="Samples of affordance, property, type, and manner aspects." />
+            <div class="img-caption">
+              Samples of affordance, property, type, and manner aspects.
+            </div>
+          </figure>
+          <figure class="img-single">
+            <img src="static/data_vis_add_3.png" alt="Samples of synonym, requirement, element, and material aspects." />
+            <div class="img-caption">
+              Samples of synonym, requirement, element, and material aspects.
+            </div>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- BIBTEX -->
+    <section id="bibtex">
+      <div class="section-subtitle">Citation</div>
+      <h2>BibTeX</h2>
+
+      <p class="muted" style="margin-top: 4px;">
       </p>
-    </div>
-  </div>
-</section>
 
+      <pre>@article{zhao2024openscan,
+  title   = {OpenScan: A Benchmark for Generalized Open-Vocabulary 3D Scene Understanding},
+  author  = {Zhao, Youjun and Lin, Jiaying and Ye, Shuquan and Pang, Qianshi and Lau, Rynson W. H.},
+  journal = {arXiv preprint arXiv:2408.11030},
+  year    = {2024}
+}</pre>
+    </section>
 
-
-<section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <h2 class="title is-3" id="dataengine">Data Engine</h2>
-    </div>
-    <div class="hero-body">
-      <!-- <video id="teaser" autoplay muted loop playsinline height="100%">
-        <source src="./static/videos/teaser.mp4"
-                type="video/mp4">
-      </video> -->
-      <img src="./static/images/data_engine.png" alt>
-      <h2 class="subtitle has-text-centered">
-      Attribute annotation via knowledge graph.
-      </h2>
-    </div>
-  </div>
-</section>
-
-
-<section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="hero-body">
-      <!-- <video id="teaser" autoplay muted loop playsinline height="100%">
-        <source src="./static/videos/teaser.mp4"
-                type="video/mp4">
-      </video> -->
-      <img src="./static/images/annotate.png" alt>
-      <h2 class="subtitle has-text-centered">
-     Manual annotation via web interface.
-      </h2>
-    </div>
-  </div>
-</section>
-
-
-<section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <h2 class="title is-3" id="datasetvisualization">Data Visualization</h2>
-    </div>
-    <div class="hero-body">
-      <!-- <video id="teaser" autoplay muted loop playsinline height="100%">
-        <source src="./static/videos/teaser.mp4"
-                type="video/mp4">
-      </video> -->
-      <img src="./static/images/dataset_vis_add_1.png" alt>
-      <h2 class="subtitle has-text-centered">
-      Examples of objects and corresponding attributes.
-      </h2>
-    </div>
-  </div>
-</section>
-
-
-<section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="hero-body">
-      <div style="display: flex; justify-content: center; gap: 20px; align-items: center;">
-        <div style="text-align: center;">
-          <img src="./static/images/data_vis_add_2.png" alt="Samples of affordance, property, type, and manner aspects" style="max-width: 100%; height: auto;">
-          <h2 class="subtitle">
-            Samples of affordance, property, type, and manner aspects.
-          </h2>
-        </div>
-        <div style="text-align: center;">
-          <img src="./static/images/data_vis_add_3.png" alt="Samples of synonym, requirement, element, and material aspects" style="max-width: 100%; height: auto;">
-          <h2 class="subtitle">
-            Samples of synonym, requirement, element, and material aspects.
-          </h2>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-  
-  
-
-
-<section class="section" id="BibTeX">
-  <div class="container is-max-desktop content">
-    <h2 class="title">BibTeX</h2>
-    <pre><code>@article{zhao2024openscan,
-  title={OpenScan: A Benchmark for Generalized Open-Vocabulary 3D Scene Understanding},
-  author={Zhao, Youjun and Lin, Jiaying and Ye, Shuquan and Pang, Qianshi and Lau, Rynson WH},
-  journal={arXiv preprint arXiv:2408.11030},
-  year={2024}
-}</code></pre>
-  </div>
-</section>
-
-
-
+    <footer>
+      <span>© Youjun Zhao</span>
+      <span>Contact: <a href="mailto:youjun.zhao@my.cityu.edu.hk">youjun.zhao@my.cityu.edu.hk</a></span>
+    </footer>
+  </main>
 </body>
 </html>
