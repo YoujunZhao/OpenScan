@@ -90,6 +90,19 @@
       text-decoration: none;
     }
 
+    :root{
+      --nav-offset: 90px;
+    }
+
+    section{
+      scroll-margin-top: var(--nav-offset);
+      margin-top: 32px;
+    }
+    section:first-of-type{
+      margin-top: 20px;
+    }
+      
+
     /* 页面布局 */
     .page {
       max-width: var(--max-width);
