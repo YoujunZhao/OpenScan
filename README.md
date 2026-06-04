@@ -36,7 +36,7 @@
 
 ### Hugging Face
 
-You can download the raw validation set, label mapping file, and the processed validation set from [HuggingFace](https://huggingface.co/datasets/garrying/OpenScan)
+You can download the raw validation set, label mapping file, and the processed validation set from [HuggingFace](https://huggingface.co/datasets/garrying/OpenScan).
 
 ### Onedrive
 
