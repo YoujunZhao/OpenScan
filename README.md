@@ -13,7 +13,7 @@
     <sup>2</sup>South China University of Technology
   </p>
     <h2 align="center">AAAI 2026</h2>
-  <h3 align="center"><a href="https://arxiv.org/abs/2408.11030">📄[arXiv]</a> | <a href="https://youjunzhao.github.io/OpenScan/">🔥[Project]</a> | <a href="https://github.com/YoujunZhao/OpenScan">💻[Code]</a> | <a href="https://github.com/YoujunZhao/OpenScan?tab=readme-ov-file#benchmark-installation">🧩[Data]</a> </h3>
+  <h3 align="center"><a href="https://arxiv.org/abs/2408.11030">📄[arXiv]</a> | <a href="https://youjunzhao.github.io/OpenScan/">🔥[Project]</a> | <a href="https://github.com/YoujunZhao/OpenScan">💻[Code]</a> | <a href="https://huggingface.co/datasets/garrying/OpenScan">🧩[Data]</a> </h3>
   <div align="center"></div>
 </p>
 
@@ -27,13 +27,20 @@
 </div><br/>
 
 ## News
-
-* **18 Oct 2024**: Release the evaluationn code of OpenScan benchmark. 💻
-* **27 Aug 2024**: Release the validation set of OpenScan benchmark. 🔥
+* **8 Nov 2025**: OpenScan is accepted by AAAI 2026. 🎉
+* **18 Oct 2024**: Release the evaluation code of OpenScan benchmark. 💻
+* **27 Aug 2024**: Release the validation set of OpenScan benchmark. 🧩
 * **20 Aug 2024**: [OpenScan](https://arxiv.org/abs/2408.11030) released on arXiv. 📝
 
 ## Benchmark Installation
-If you want to download the OpenScan benchmark data, we provide the raw validation set from [OneDrive](https://portland-my.sharepoint.com/:u:/g/personal/youjzhao2-c_my_cityu_edu_hk/ETXoQ8QIZNpKnxCLvtT8Xl8BWAcvo_SoiAHd_ao3is1cKQ?e=mWHwbS), and the label mapping file from [OneDrive](https://portland-my.sharepoint.com/:f:/g/personal/youjzhao2-c_my_cityu_edu_hk/EtTl_Lv8-idGtgjn-b1jpKUBulI_pQ1TonnV3Ypu8WUqYw?e=iIucfW).
+
+### Hugging Face
+
+You can download the raw validation set, label mapping file, and the processed validation set from [HuggingFace](https://huggingface.co/datasets/garrying/OpenScan)
+
+### Onedrive
+
+If you want to download the OpenScan benchmark data from OneDrive, we provide the raw validation set from [OneDrive](https://portland-my.sharepoint.com/:u:/g/personal/youjzhao2-c_my_cityu_edu_hk/ETXoQ8QIZNpKnxCLvtT8Xl8BWAcvo_SoiAHd_ao3is1cKQ?e=mWHwbS), and the label mapping file from [OneDrive](https://portland-my.sharepoint.com/:f:/g/personal/youjzhao2-c_my_cityu_edu_hk/EtTl_Lv8-idGtgjn-b1jpKUBulI_pQ1TonnV3Ypu8WUqYw?e=iIucfW).
 
 You can also download the processed validation set from [OneDrive](https://portland-my.sharepoint.com/:f:/g/personal/youjzhao2-c_my_cityu_edu_hk/EiIUDBGAK7FNrtT_zpYNAaQBEv8HTjZPNwJDQYBGl6g6YQ?e=5P1n9M).
 
@@ -41,20 +48,46 @@ You can also download the processed validation set from [OneDrive](https://portl
 
 ```python
     {
-        "scene_id":   [ScanNet scene id,           e.g. "scene0011_00"],
-        "object_id":  [ScanNet object id,          e.g. "0"],
-        "object_name":[ScanNet object name,        e.g. "chair"],
-        "material":   [ScanNet object material,    e.g. "wood"],
-        "affordance": [ScanNet object affordance,  e.g. "sleep"],
-        "property":   [ScanNet object property,    e.g. "soft"],
-        "type":       [ScanNet object type,        e.g. "source of illumination"],
-        "manner":     [ScanNet object manner,      e.g. "steered by handlebars"],
-        "synonyms":   [ScanNet object synonyms,    e.g. "bedside table"],
-        "requirement":[ScanNet object requirement, e.g. "water and sun"],
-        "element":    [ScanNet object element,     e.g. "88 keys"]
+        "scene_id":          "scene0011_00",           
+        "object_id":         "0",                      
+        "object_name":       "chair",                  
+        "material":          "wood",                  
+        "affordance":        "sleep",                  
+        "property":          "soft",                  
+        "type":              "source of illumination", 
+        "manner":            "steered by handlebars",  
+        "synonyms":          "bedside table",         
+        "requirement":       "water and sun",          
+        "element":           "88 keys"                
     },
 
 ```
+
+## Evaluation
+
+### 1. Quick Evaluation on Your Codebase
+If your codebase already supports evaluation for the ScanNet or ScanNet200 benchmarks, you can easily adapt it for the OpenScan benchmark by changing the ground truth (GT) labels and label mapping files.
+
+* Download the processed validation set and the label mapping file for the OpenScan benchmark from [Benchmark Installation](https://github.com/YoujunZhao/OpenScan?tab=readme-ov-file#benchmark-installation).
+
+* Place the processed OpenScan validation set into your GT file directory.
+
+* Replace your existing label mapping scripts with the OpenScan label mapping file (e.g, replace the [SCANNET_LABELS and SCANNET_IDS](https://github.com/YoujunZhao/OpenScan/blob/main/Evaluation/MaskClustering/evaluation/constants_material_1.py)).
+
+* Run your evaluation process.
+
+### 2. Evaluation on Existing 3D Scene Understanding Baselines
+If you want to evaluate OpenMask3D, SAI3D, MaskClustering, or Open3DIS on the OpenScan benchmark, you can first clone the repository and then:
+
+* For OpenMask3D, please refer to [OpenMask3D](https://github.com/YoujunZhao/OpenScan/tree/main/Evaluation/OpenMask3D).
+
+* For SAI3D, please refer to [SAI3D](https://github.com/YoujunZhao/OpenScan/tree/main/Evaluation/SAI3D).
+
+* For MaskClustering, please refer to [MaskClustering](https://github.com/YoujunZhao/OpenScan/tree/main/Evaluation/MaskClustering).
+
+* For Open3DIS, please refer to [Open3DIS](https://github.com/YoujunZhao/OpenScan/tree/main/Evaluation/Open3DIS).
+
+
 ## Citation :pray:
 ```
 @article{zhao2024openscan,
